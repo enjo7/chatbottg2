@@ -3,7 +3,7 @@ import threading
 import time
 import chatbot as cb
 
-#Handles input and output from LLM to user and vice versa
+
 def IOhandler(update, context):
     if cb.isRunning:
         cb.prompt = update.message.text
@@ -17,13 +17,13 @@ def IOhandler(update, context):
 
 IOFunc = MessageHandler(Filters.text, IOhandler)
 
-#Displays help using /help command
+
 def help(update, context):
     update.message.reply_text("This bot allows you to communicate with a LLM using telegram!\n\n/help displays this help page\n/hello initiates a conversation\n/stop halts a conversation\n/persistence [on|off] toggles conversation retention")
 
 helpFunc = CommandHandler('help', help)
 
-#Starts the LLM using /hello command
+
 def hello(update, context):
     if cb.isRunning == False:
         cb.isRunning = True
@@ -35,7 +35,6 @@ def hello(update, context):
 
 startFunc = CommandHandler('hello', hello)
 
-#Stops the LLM using /stop command
 def stop(update, context):
     if cb.isRunning == False:
         update.message.reply_text("Nothing to halt..")
@@ -45,7 +44,6 @@ def stop(update, context):
 
 stopFunc = CommandHandler('stop', stop)
 
-#Enables experimental conversation persistance between chat sessions
 def persistence(update, context):
     if cb.isRunning == False:
         if len(context.args) == 1:
